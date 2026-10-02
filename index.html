@@ -3,125 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa Interativo de Quilombos - MG e RJ</title>
-    
-    <!-- CSS do Leaflet via JSDelivr (Servidor Desbloqueado) -->
-    <link rel="stylesheet" href="https://jsdelivr.net" />
-    
+    <title>Painel Interativo de Comunidades Quilombolas</title>
     <style>
-        html, body, #map {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #f8f9fa; /* Fundo cinza claro caso o mapa demore a carregar */
-        }
-
-        .leaflet-popup-content-wrapper {
+        body {
             font-family: Arial, sans-serif;
-            font-size: 14.5px;
-            border-radius: 10px;
-            padding: 6px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 20px;
+            color: #1f2937;
         }
-
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #111827;
+            font-size: 22px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+        .card-comunidade {
+            background: #fafafa;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .titulo-local {
+            color: #2563eb;
+            margin-top: 0;
+        }
+        /* Estilização do menu retrátil (Toggle) */
         details {
-            background: #f8f9fa;
-            padding: 10px;
+            background: #f1f3f5;
+            padding: 12px;
             border-radius: 6px;
             margin-top: 12px;
             cursor: pointer;
-            border: 1px solid #e9ecef;
+            border: 1px solid #dee2e6;
         }
-
         details[open] summary {
             border-bottom: 1px solid #dee2e6;
             padding-bottom: 6px;
             margin-bottom: 6px;
             color: #d946ef;
         }
-
         summary {
             font-weight: bold;
             outline: none;
             color: #2563eb;
         }
-
-        .popup-titulo {
-            margin: 0 0 8px 0;
-            color: #1e293b;
-            font-size: 16px;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 4px;
-        }
     </style>
 </head>
 <body>
 
-    <div id="map"></div>
+    <div class="container">
+        <h1>📍 Registro de Comunidades Quilombolas</h1>
 
-    <!-- JavaScript do Leaflet via JSDelivr (Servidor Desbloqueado) -->
-    <script src="https://jsdelivr.net"></script>
-
-    <script>
-        // Inicializa o mapa
-        const map = L.map('map', {
-            center: [-14.2350, -51.9253],
-            zoom: 4
-        });
-
-        // Camadas de mapas de servidores diferentes para evitar bloqueios
-        const mapaPadrao = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap'
-        });
-
-        const mapaEscuro = L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap &copy; CARTO',
-            subdomains: 'abcd',
-            maxZoom: 20
-        });
-
-        mapaPadrao.addTo(map);
-
-        const mapasBase = {
-            "Mapa Padrão": mapaPadrao,
-            "Visual Escuro (Dark)": mapaEscuro
-        };
-        L.control.layers(mapasBase).addTo(map);
-
-        // Animação de aproximação
-        setTimeout(() => {
-            map.flyTo([-19.5000, -42.8000], 6, {
-                animate: true,
-                duration: 3.0
-            });
-        }, 2000);
-
-        // Marcador: Comunidade de Mumbuca (MG)
-        const marcadorMG = L.marker([-16.4355, -41.0033]).addTo(map);
-        const conteudoMG = `
-            <h3 class="popup-titulo">📍 Comunidade de Mumbuca</h3>
+        <!-- Bloco 1: Minas Gerais -->
+        <div class="card-comunidade">
+            <h3 class="titulo-local">📍 Comunidade de Mumbuca</h3>
             <p><b>Município:</b> Jequitinhonha (MG)</p>
-            <p>Aqui você pode usar <b>Negrito</b>, <i>Itálico</i> e <u>Sublinhado</u>.</p>
+            <p>Demonstração de estilos de texto aceitos:</p>
+            <ul>
+                <li>Texto em <b>Negrito</b></li>
+                <li>Texto em <i>Itálico</i></li>
+                <li>Texto <u>Sublinhado</u></li>
+                <li>Combinações: <u><b><i>Negrito, Itálico e Sublinhado</i></b></u></li>
+            </ul>
+            
             <details>
-                <summary>👉 Clique para expandir (Toggle)</summary>
-                <p style="margin-top: 5px; color: #475569;">Este é o texto oculto que funciona perfeitamente!</p>
+                <summary>👉 Clique aqui para expandir as informações (Toggle)</summary>
+                <p style="margin-top: 5px; color: #4b5563;">
+                    Este texto estava totalmente oculto! O menu retrátil funciona perfeitamente de forma nativa e sem travamentos.
+                </p>
             </details>
-        `;
-        marcadorMG.bindPopup(conteudoMG);
+        </div>
 
-        // Marcador: Quilombo do Campinho da Independência (RJ)
-        const marcadorRJ = L.marker([-23.2961, -44.7008]).addTo(map);
-        const conteudoRJ = `
-            <h3 class="popup-titulo">📍 Campinho da Independência</h3>
+        <!-- Bloco 2: Rio de Janeiro -->
+        <div class="card-comunidade">
+            <h3 class="titulo-local">📍 Quilombo do Campinho da Independência</h3>
             <p><b>Município:</b> Paraty (RJ)</p>
+            <p><i>Primeira comunidade quilombola titulada do estado do Rio de Janeiro.</i></p>
+            
             <details>
-                <summary>📋 Ver Atrativos Culturais</summary>
-                <p style="margin-top: 5px; color: #475569;">• Restaurante Quilombola<br>• Artesanato tradicional</p>
+                <summary>📋 Ver Atrativos Culturais (Toggle)</summary>
+                <p style="margin-top: 5px; color: #4b5563;">
+                    • Famoso <b>Restaurante Quilombola</b> local.<br>
+                    • Produção de <i>artesanato tradicional</i>.<br>
+                    • Roteiros guiados de turismo ecológico e cultural.
+                </p>
             </details>
-        `;
-        marcadorRJ.bindPopup(conteudoRJ);
-    </script>
+        </div>
+    </div>
+
 </body>
 </html>
