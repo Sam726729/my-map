@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Interativo de Quilombos - MG e RJ</title>
+    
+    <!-- CSS do Leaflet para renderizar o mapa corretamente -->
+    <link rel="stylesheet" href="https://unpkg.com" />
+    
+    <style>
+        /* Garante que o mapa ocupe a tela inteira */
+        html, body, #map {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Estilização customizada da caixinha de descrição (Popup) */
+        .leaflet-popup-content-wrapper {
+            font-family: Arial, sans-serif;
+            font-size: 14.5px;
+            border-radius: 10px;
+            padding: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Estilização do menu retrátil (Toggle) */
+        details {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 12px;
+            cursor: pointer;
+            border: 1px solid #e9ecef;
+            transition: background 0.2s ease;
+        }
+
+        details:hover {
+            background: #f1f3f5;
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 6px;
+            margin-bottom: 6px;
+            color: #d946ef; /* Destaca a cor quando aberto */
+        }
+
+        summary {
+            font-weight: bold;
+            outline: none;
+            color: #2563eb;
+            list-style: none; /* Remove a seta padrão em alguns navegadores */
+        }
+
+        summary::-webkit-details-marker {
+            display: none; /* Remove a seta padrão no Chrome/Safari */
+        }
+
+        /* Elementos personalizados de texto dentro do pop-up */
+        .popup-titulo {
+            margin: 0 0 8px 0;
+            color: #1e293b;
+            font-size: 16px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Elemento onde o mapa será desenhado -->
+    <div id="map"></div>
+
+    <!-- JavaScript do Leaflet -->
+    <script src="https://unpkg.com"></script>
+
+    <script>
+        // 1. Inicializa o mapa mostrando o Brasil por completo
+        const map = L.map('map', {
+            center: [-14.2350, -51.9253],
+            zoom: 4
+        });
+
+        // 2. Definição das diferentes camadas de visualização (Estilos do Mapa)
+        const mapaPadrao = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        });
+
+        const mapaSatelite = L.tileLayer('https://arcgisonline.com{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        });
+
+        const mapaEscuro = L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors &copy; <a href="https://carto.com">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 20
+        });
+
+        // Ativa o mapa padrão por padrão ao carregar
+        mapaPadrao.addTo(map);
+
+        // Agrupa as opções para o menu de controle do canto superior direito
+        const mapasBase = {
+            "Mapa Padrão": mapaPadrao,
+            "Satélite": mapaSatelite,
+            "Visual Escuro (Dark)": mapaEscuro
+        };
+        L.control.layers(mapasBase).addTo(map);
+
+
+        // 3. Executa a animação de aproximação automática após 2 segundos
+        // Foca no centro aproximado entre as duas regiões com um zoom equilibrado
+        setTimeout(() => {
+            map.flyTo([-19.5000, -42.8000], 6, {
+                animate: true,
+                duration: 3.0 // Duração suave de 3 segundos
+            });
+        }, 2000);
+
+
+        // 4. Marcador: Comunidade de Mumbuca — Jequitinhonha (MG)
+        // Coordenadas precisas da região do Quilombo Mumbuca
+        const marcadorMG = L.marker([-16.4355, -41.0033]).addTo(map);
+        
+        const conteudoMG = `
+            <h3 class="popup-titulo">📍 Comunidade de Mumbuca</h3>
+            <p style="margin: 5px 0;"><b>Município:</b> Jequitinhonha (MG)</p>
+            <p>Demonstração de estilos avançados de texto:</p>
+            <ul>
+                <li>Formatação em <b>Texto em Negrito</b></li>
+                <li>Formatação em <i>Texto em Itálico</i></li>
+                <li>Formatação em <u>Texto Sublinhado</u></li>
+                <li>Combinações: <u><b><i>Negrito, Itálico e Sublinhado</i></b></u></li>
+                <li>Estilo em <span style="color: #e65100; font-weight: bold;">Texto Colorido</span></li>
+            </ul>
+            <details>
+                <summary>👉 Clique para expandir informações adicionais</summary>
+                <p style="margin-top: 5px; color: #475569; font-size: 13.5px;">
+                    O menu retrátil funciona perfeitamente aqui dentro! Você pode adicionar tabelas, listas organizadas ou parágrafos longos sem quebrar o layout do mapa.
+                </p>
+            </details>
+        `;
+        marcadorMG.bindPopup(conteudoMG);
+
+
+        // 5. Marcador: Quilombo do Campinho da Independência — Paraty (RJ)
+        // Coordenadas exatas do Quilombo do Campinho localizado na BR-101
+        const marcadorRJ = L.marker([-23.2961, -44.7008]).addTo(map);
+        
+        const conteudoRJ = `
+            <h3 class="popup-titulo">📍 Campinho da Independência</h3>
+            <p style="margin: 5px 0;"><b>Município:</b> Paraty (RJ)</p>
+            <p>Primeira comunidade quilombola titulada do estado do Rio de Janeiro.</p>
+            <details>
+                <summary>📋 Ver Atrativos Culturais (Toggle)</summary>
+                <p style="margin-top: 5px; color: #475569; font-size: 13.5px;">
+                    • Famoso <b>Restaurante Quilombola</b> local.<br>
+                    • Produção de <i>artesanato tradicional</i>.<br>
+                    • Roteiros guiados de turismo ecológico e cultural.
+                </p>
+            </details>
+        `;
+        marcadorRJ.bindPopup(conteudoRJ);
+
+    </script>
+</body>
+</html>
