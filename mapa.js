@@ -1,82 +1,73 @@
-// 1. Inicializa o mapa com visão ampla do Brasil
-const map = L.map('map', {
-    center: [-14.2350, -51.9253],
-    zoom: 4
-});
-
-// 2. Carrega as imagens do mapa de fundo padrão (OpenStreetMap)
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap contributors'
-}).addTo(map);
-
-// 3. Animação de aproximação automática (Executa após 2 segundos)
-setTimeout(() => {
-    map.flyTo([-19.5000, -42.8000], 6, {
-        animate: true,
-        duration: 2.5
-    });
-}, 2000);
-
-// --- CRIAÇÃO DOS ÍCONES COLORIDOS EM SVG ---
-
-// Marcador Laranja (Rio de Janeiro)
-const iconeLaranja = L.divIcon({
-    className: 'custom-pin',
-    html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f97316" width="36px" height="36px" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));">
-            <path d="M12 0C7.58 0 4 3.58 4 8c0 5.25 8 13 8 13s8-7.75 8-13c0-4.42-3.58-8-8-8zm0 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
-           </svg>`,
-    iconSize: [36, 36],
-    iconAnchor: [18, 36],
-    popupAnchor: [0, -32]
-});
-
-// Marcador Azul Padrão (Minas Gerais)
-const iconeAzul = L.divIcon({
-    className: 'custom-pin',
-    html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2563eb" width="36px" height="36px" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));">
-            <path d="M12 0C7.58 0 4 3.58 4 8c0 5.25 8 13 8 13s8-7.75 8-13c0-4.42-3.58-8-8-8zm0 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
-           </svg>`,
-    iconSize: [36, 36],
-    iconAnchor: [18, 36],
-    popupAnchor: [0, -32]
-});
-
-// --- ADICIONANDO OS MARCADORES COM OS ÍCONES PERSONALIZADOS ---
-
-// 4. Alfinete: Comunidade de Mumbuca (MG) -> Recebe o iconeAzul
-const marcadorMG = L.marker([-16.4355, -41.0033], { icon: iconeAzul }).addTo(map);
+// ==========================================
+// 1. CONTEÚDO: COMUNIDADE DE MUMBUCA (MG)
+// ==========================================
 const conteudoMG = `
-    <h3 class="popup-titulo">📍 Comunidade de Mumbuca</h3>
-    <p><b>Município:</b> Jequitinhonha (MG)</p>
-    <p>Demonstração de ferramentas de texto exigidas:</p>
-    <ul>
-        <li>Texto em <b>Negrito</b></li>
-        <li>Texto em <i>Itálico</i></li>
-        <li>Texto <u>Sublinhado</u></li>
-    </ul>
-    <details>
-        <summary>👉 Clique para expandir (Toggle)</summary>
-        <p style="margin-top: 5px; color: #4b5563;">
-            Este texto estava totalmente oculto dentro do mapa! O menu retrátil funciona perfeitamente aqui dentro do balão do alfinete.
-        </p>
-    </details>
-`;
-marcadorMG.bindPopup(conteudoMG);
+    <div class="popup-conteudo">
+        <h3 class="popup-titulo">📍 Comunidade de Mumbuca</h3>
+        <p class="popup-subtitulo"><b>Município:</b> Jequitinhonha (MG)</p>
+        <p class="popup-destaque"><b>Foco:</b> Agricultura familiar, mutirão e feira livre comunitária.</p>
 
-// 5. Alfinete: Campinho da Independência (RJ) - Laranja
-const marcadorRJ = L.marker([-23.2961, -44.7008], { icon: iconeLaranja }).addTo(map);
-const conteudoRJ = `
-    <h3 class="popup-titulo">📍 Campinho da Independência</h3>
-    <p><b>Município:</b> Paraty (RJ)</p>
-    <p><i>Primeira comunidade quilombola titulada do estado do Rio de Janeiro.</i></p>
-    <details>
-        <summary>📋 Ver Atrativos Culturais</summary>
-        <p style="margin-top: 5px; color: #4b5563;">
-            • Famoso <b>Restaurante Quilombola</b> local.<br>
-            • Produção de <i>artesanato tradicional</i>.<br>
-            • Roteiros guiados de turismo ecológico e cultural.
-        </p>
-    </details>
+        <!-- Seção 1: Mutirão -->
+        <details>
+            <summary>🤝 O Mutirão e Troca de Trabalho</summary>
+            <p>O <b>mutirão</b> é uma prática ancestral de cooperação técnica e social. As famílias se reúnem para realizar o plantio e a colheita coletiva, trocando dias de trabalho direto sem a necessidade de mediação financeira.</p>
+        </details>
+
+        <!-- Seção 2: Feira e Autonomia -->
+        <details>
+            <summary>🛒 A Feira de Sábado e o Fim do "Atravessador"</summary>
+            <p>A feira comunitária de sábado permite que os produtores vendam alimentos diretamente ao consumidor final. Essa autonomia eliminou a figura do <u>atravessador</u>, garantindo preços mais justos para quem produz e para quem compra.</p>
+        </details>
+
+        <!-- Seção 3: Cultivos -->
+        <details>
+            <summary>🌱 Cultivos Centrais</summary>
+            <p>Principais produtos da agricultura familiar local:</p>
+            <ul>
+                <li><b>Mandioca e Farinhadas:</b> Produção tradicional de farinha e derivados.</li>
+                <li><b>Milho Crioulo:</b> Sementes mantidas e preservadas pelas gerações.</li>
+                <li><b>Feijões Nativos:</b> Variedades adaptadas ao bioma do Vale do Jequitinhonha.</li>
+                <li><b>Hortaliças:</b> Cultivo orgânico e diversificado.</li>
+            </ul>
+        </details>
+    </div>
 `;
-marcadorRJ.bindPopup(conteudoRJ);
+
+// ==========================================
+// 2. CONTEÚDO: CAMPINHO DA INDEPENDÊNCIA (RJ)
+// ==========================================
+const conteudoRJ = `
+    <div class="popup-conteudo">
+        <h3 class="popup-titulo">📍 Quilombo do Campinho</h3>
+        <p class="popup-subtitulo"><b>Município:</b> Paraty (RJ)</p>
+        <p class="popup-destaque"><b>Foco:</b> Gastronomia afro-caiçara, ancestralidade e turismo comunitário.</p>
+
+        <!-- Seção 1: Ancestralidade -->
+        <details>
+            <summary>👑 As Três Ancestrais</summary>
+            <p>A comunidade foi fundada no final do século XIX por três mulheres guerreiras: <b>Antonica</b>, <b>Marcelina</b> e <b>Luiza</b>. A história e a posse da terra foram mantidas através do matriarcado e da resistência cultural.</p>
+        </details>
+
+        <!-- Seção 2: Culinária -->
+        <details>
+            <summary>🍲 Culinária Afro-Caiçara</summary>
+            <p>O <i>Restaurante do Quilombo</i> valoriza os ingredientes da Mata Atlântica e a tradição ancestral. Destaques do cardápio:</p>
+            <ul>
+                <li><b>Camarão com Taioba:</b> Mistura de frutos do mar com folhas nativas.</li>
+                <li><b>Peixe à Moda Quilombola:</b> Assado com temperos tradicionais.</li>
+                <li><b>Suco/Drink de Juçara:</b> Fruto nativo da palmeira-juçara local.</li>
+            </ul>
+        </details>
+
+        <!-- Seção 3: Artesanato e Cultura -->
+        <details>
+            <summary>🎨 Artesanato e Manifestações</summary>
+            <p>Na <b>Casa de Artesanato</b> encontram-se trançados de fibra de taboa, cipó, cestaria e esculturas em madeira.</p>
+            <p>A comunidade preserva e realiza apresentações de <b>Jongo</b> (dança e ritmo ancestral) e rodas de <b>Capoeira</b>.</p>
+        </details>
+    </div>
+`;
+
+// Vincula os conteúdos aos marcadores já existentes no seu código
+marcadorMG.bindPopup(conteudoMG, { maxWidth: 320 });
+marcadorRJ.bindPopup(conteudoRJ, { maxWidth: 320 });
