@@ -1,48 +1,70 @@
-/* Garante que o mapa ocupe a tela inteira */
-html, body, #map {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #e5e7eb;
-}
-
-/* Estilização interna do balão do mapa (Popup) */
+/* Configuração do Balão do Mapa */
 .leaflet-popup-content-wrapper {
     font-family: Arial, sans-serif;
     font-size: 14px;
-    border-radius: 10px;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.popup-conteudo {
+    max-height: 400px;
+    overflow-y: auto; /* Adiciona barra de rolagem se o texto for grande */
+    padding-right: 4px;
+}
+
+.popup-titulo {
+    margin: 0 0 4px 0;
+    color: #1f2937;
+    font-size: 16px;
+}
+
+.popup-subtitulo {
+    margin: 0 0 6px 0;
+    color: #4b5563;
+    font-size: 13px;
+}
+
+.popup-destaque {
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    color: #1e3a8a;
+    background-color: #eff6ff;
     padding: 6px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 4px;
 }
 
-/* Menu retrátil (Toggle) nativo e estilizado */
+/* Estilo dos Menus Retráteis (Accordion) */
 details {
-    background: #f3f4f6;
-    padding: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     border-radius: 6px;
-    margin-top: 10px;
-    cursor: pointer;
-    border: 1px solid #e5e7eb;
+    padding: 8px;
+    margin-bottom: 8px;
+    transition: background-color 0.2s ease;
 }
 
-details[open] summary {
-    border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 4px;
-    margin-bottom: 6px;
-    color: #b91c1c;
+details[open] {
+    background: #ffffff;
+    border-color: #cbd5e1;
 }
 
 summary {
     font-weight: bold;
+    color: #0f172a;
+    cursor: pointer;
     outline: none;
-    color: #2563eb;
+    user-select: none;
 }
 
-.popup-titulo {
-    margin: 0 0 6px 0;
-    color: #111827;
-    font-size: 15px;
-    border-bottom: 2px solid #e5e7eb;
-    padding-bottom: 4px;
+details p, details ul {
+    margin-top: 8px;
+    margin-bottom: 0;
+    color: #334155;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+details ul {
+    padding-left: 18px;
 }
