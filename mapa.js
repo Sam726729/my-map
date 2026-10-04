@@ -31,10 +31,10 @@ const iconeLaranja = L.divIcon({
     popupAnchor: [0, -32]
 });
 
-// Marcador Verde/Destaque (Minas Gerais)
-const iconeVerde = L.divIcon({
+// Marcador Azul Padrão (Minas Gerais)
+const iconeAzul = L.divIcon({
     className: 'custom-pin',
-    html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#16a34a" width="36px" height="36px" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));">
+    html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2563eb" width="36px" height="36px" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));">
             <path d="M12 0C7.58 0 4 3.58 4 8c0 5.25 8 13 8 13s8-7.75 8-13c0-4.42-3.58-8-8-8zm0 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
            </svg>`,
     iconSize: [36, 36],
@@ -44,8 +44,8 @@ const iconeVerde = L.divIcon({
 
 // --- ADICIONANDO OS MARCADORES COM OS ÍCONES PERSONALIZADOS ---
 
-// 4. Alfinete: Comunidade de Mumbuca (MG) - Verde
-const marcadorMG = L.marker([-16.4355, -41.0033], { icon: iconeVerde }).addTo(map);
+// 4. Alfinete: Comunidade de Mumbuca (MG) -> Recebe o iconeAzul
+const marcadorMG = L.marker([-16.4355, -41.0033], { icon: iconeAzul }).addTo(map);
 const conteudoMG = `
     <h3 class="popup-titulo">📍 Comunidade de Mumbuca</h3>
     <p><b>Município:</b> Jequitinhonha (MG)</p>
