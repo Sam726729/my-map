@@ -28,11 +28,11 @@ html, body {
 
 .popup-conteudo {
     max-height: 380px;
-    overflow-y: auto; /* Adiciona barra de rolagem se o texto for grande */
+    overflow-y: auto;
     padding-right: 4px;
 }
 
-/* Barra de rolagem personalizada e discreta dentro do balão */
+/* Barra de rolagem discreta */
 .popup-conteudo::-webkit-scrollbar {
     width: 6px;
 }
@@ -112,9 +112,7 @@ details ul {
     padding-left: 18px;
 }
 
-/* ==========================================
-   4. GALERIA DE FOTOS DENTRO DO POPUP
-   ========================================== */
+/* Estilo das miniaturas de fotos */
 details img {
     max-width: 100%;
     height: auto;
@@ -122,10 +120,56 @@ details img {
     border-radius: 6px;
     margin-top: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
 }
 
-/* Remoção de borda do marcador SVG para alinhamento limpo */
+details img:hover {
+    transform: scale(1.02);
+}
+
 .custom-pin {
     background: none;
     border: none;
+}
+
+/* ==========================================
+   4. MODAL PARA AMPLIAR A IMAGEM (LIGHTBOX)
+   ========================================== */
+.modal-imagem {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+}
+
+.conteudo-modal {
+    max-width: 80vw;
+    max-height: 80vh;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    object-fit: contain;
+    animation: zoomIn 0.2s ease-out;
+}
+
+.fechar-modal {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
