@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapeamento de Comunidades Tradicionais - MG e RJ</title>
+    <title>Mapa Interativo das Comunidades Quilombolas - MG e RJ</title>
     
     <!-- CSS do Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -15,6 +15,12 @@
 
     <!-- Container onde o mapa é renderizado -->
     <div id="map"></div>
+
+    <!-- Modal/Janela para ampliar as imagens ao clicar -->
+    <div id="imagemModal" class="modal-imagem" onclick="fecharModal()">
+        <span class="fechar-modal">&times;</span>
+        <img id="imagemExpandida" class="conteudo-modal" alt="Imagem ampliada">
+    </div>
 
     <!-- JS do Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
