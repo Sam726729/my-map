@@ -30,6 +30,11 @@ const conteudoMG = `
                 <li><b>Hortaliças:</b> Cultivo orgânico e diversificado.</li>
             </ul>
         </details>
+        <details>
+    <summary>🖼️ Galeria de Fotos</summary>
+    <img src="caminho-da-sua-imagem.jpg" alt="Cultivo de Mandioca" style="width:100%; border-radius:6px; margin-top:6px;">
+    <p style="font-size:11px; color:#666; text-align:center;">Legenda da imagem</p>
+</details>
     </div>
 `;
 
