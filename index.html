@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa Interativo das Comunidades Quilombolas - MG e RJ</title>
     
-    <!-- CSS do Leaflet corrigido -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9t/6BqF9PqKz/8t3tQ81wV3lPnsjK/0Gz+6/E0Q2pUuP+a55b+5zD/1qFm8/62M4b9+R6/b1r2P1y9z+z/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- CSS do Leaflet via UNPKG sem restrição SRI -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <style>
-        /* Garante que o mapa ocupe a tela inteira exigida pelo trabalho */
+        /* Garante que o mapa ocupe a tela inteira */
         html, body, #map {
             margin: 0;
             padding: 0;
@@ -61,11 +61,11 @@
 </head>
 <body>
 
-    <!-- O mapa interativo será renderizado obrigatoriamente aqui dentro -->
+    <!-- Contêiner do mapa -->
     <div id="map"></div>
 
-    <!-- JavaScript do Leaflet corrigido -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-4C+Oa154K7k1P48sXWk4CzvP2K6Tz+6a+P8z4K+4e4Q7A+z+Z5+K+Q+Y+9k+C+2e4k+R+Y+1qFm8+62M4b9+R6==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- JavaScript do Leaflet via UNPKG sem restrição SRI -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
         // 1. Inicializa o mapa com visão ampla do Brasil
@@ -74,7 +74,7 @@
             zoom: 4
         });
 
-        // 2. Carrega as imagens do mapa de fundo usando a rede global OpenStreetMap (mais recomendada e estável)
+        // 2. Carrega as imagens do mapa de fundo via OpenStreetMap
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap contributors'
