@@ -6,13 +6,13 @@ const map = L.map('map', {
     zoom: 4
 });
 
-// Camada de fundo padrão e estável do OpenStreetMap
+// Camada de fundo padrão do OpenStreetMap
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// Animação de aproximação automática (executa após 2 segundos)
+// Animação de aproximação automática
 setTimeout(() => {
     map.flyTo([-19.5000, -42.8000], 6, {
         animate: true,
@@ -22,7 +22,7 @@ setTimeout(() => {
 
 
 // ==========================================
-// 2. CRIAÇÃO DOS ÍCONES COLORIDOS EM SVG
+// 2. ÍCONES COLORIDOS EM SVG
 // ==========================================
 
 // Marcador Laranja (Rio de Janeiro)
@@ -36,7 +36,7 @@ const iconeLaranja = L.divIcon({
     popupAnchor: [0, -32]
 });
 
-// Marcador Azul Padrão (Minas Gerais)
+// Marcador Azul (Minas Gerais)
 const iconeAzul = L.divIcon({
     className: 'custom-pin',
     html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2563eb" width="36px" height="36px" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));">
@@ -49,7 +49,7 @@ const iconeAzul = L.divIcon({
 
 
 // ==========================================
-// 3. ESTRUTURA DOS CONTEÚDOS DOS BALÕES
+// 3. CONTEÚDO DOS POPUPS
 // ==========================================
 
 // --- PARTE 1: COMUNIDADE DE MUMBUCA (MG) ---
@@ -82,8 +82,8 @@ const conteudoMG = `
 
         <details>
             <summary>🖼️ Galeria de Fotos</summary>
-            <img src="mandioca.jpg" alt="Cultivo de Mandioca" style="width:100%; border-radius:6px; margin-top:6px;">
-            <p style="font-size:11px; color:#666; text-align:center;">Produção tradicional de mandioca em Mumbuca</p>
+            <img src="mandioca.jpg" alt="Cultivo de Mandioca" onclick="ampliarImagem(this.src)">
+            <p style="font-size:11px; color:#666; text-align:center;">Clique na imagem para ampliar</p>
         </details>
     </div>
 `;
@@ -118,8 +118,8 @@ const conteudoRJ = `
 
         <details>
             <summary>🖼️ Galeria de Fotos</summary>
-            <img src="campinho.jpg" alt="Quilombo do Campinho" style="width:100%; border-radius:6px; margin-top:6px;">
-            <p style="font-size:11px; color:#666; text-align:center;">Restaurante e vivência comunitária no Campinho</p>
+            <img src="campinho.jpg" alt="Quilombo do Campinho" onclick="ampliarImagem(this.src)">
+            <p style="font-size:11px; color:#666; text-align:center;">Clique na imagem para ampliar</p>
         </details>
     </div>
 `;
@@ -129,10 +129,25 @@ const conteudoRJ = `
 // 4. CRIAÇÃO E VÍNCULO DOS MARCADORES
 // ==========================================
 
-// Marcador MG (Azul)
-const marcadorMG = L.marker([-16.4355, -41.0033], { icon: iconeAzul }).addTo(map);
+// Marcador MG (Coordenada exata da Comunidade de Mumbuca)
+const marcadorMG = L.marker([-16.4883, -41.2586], { icon: iconeAzul }).addTo(map);
 marcadorMG.bindPopup(conteudoMG, { maxWidth: 320 });
 
-// Marcador RJ (Laranja)
+// Marcador RJ (Coordenada do Quilombo do Campinho)
 const marcadorRJ = L.marker([-23.2961, -44.7008], { icon: iconeLaranja }).addTo(map);
 marcadorRJ.bindPopup(conteudoRJ, { maxWidth: 320 });
+
+
+// ==========================================
+// 5. LÓGICA DO MODAL DE AMPLIAR IMAGEM
+// ==========================================
+function ampliarImagem(src) {
+    const modal = document.getElementById('imagemModal');
+    const imgModal = document.getElementById('imagemExpandida');
+    imgModal.src = src;
+    modal.style.display = 'flex';
+}
+
+function fecharModal() {
+    document.getElementById('imagemModal').style.display = 'none';
+}
