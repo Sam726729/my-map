@@ -1,52 +1,87 @@
-/* Configuração do Balão do Mapa */
+/* ==========================================
+   1. CONFIGURAÇÕES GERAIS DA TELA E MAPA
+   ========================================== */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #e5e7eb;
+}
+
+#map {
+    width: 100%;
+    height: 100vh;
+}
+
+/* ==========================================
+   2. ESTILIZAÇÃO DO BALÃO DO LEAFLET (POPUP)
+   ========================================== */
 .leaflet-popup-content-wrapper {
     font-family: Arial, sans-serif;
     font-size: 14px;
-    border-radius: 8px;
-    padding: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .popup-conteudo {
-    max-height: 400px;
+    max-height: 380px;
     overflow-y: auto; /* Adiciona barra de rolagem se o texto for grande */
     padding-right: 4px;
 }
 
+/* Barra de rolagem personalizada e discreta dentro do balão */
+.popup-conteudo::-webkit-scrollbar {
+    width: 6px;
+}
+
+.popup-conteudo::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
 .popup-titulo {
     margin: 0 0 4px 0;
-    color: #1f2937;
+    color: #0f172a;
     font-size: 16px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 4px;
 }
 
 .popup-subtitulo {
     margin: 0 0 6px 0;
-    color: #4b5563;
+    color: #475569;
     font-size: 13px;
 }
 
 .popup-destaque {
     margin: 0 0 10px 0;
     font-size: 13px;
-    color: #1e3a8a;
+    color: #1e40af;
     background-color: #eff6ff;
-    padding: 6px;
-    border-radius: 4px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border-left: 3px solid #2563eb;
 }
 
-/* Estilo dos Menus Retráteis (Accordion) */
+/* ==========================================
+   3. MENUS RETRÁTEIS (DETAILS E SUMMARY)
+   ========================================== */
 details {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 6px;
-    padding: 8px;
+    padding: 8px 10px;
     margin-bottom: 8px;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease-in-out;
 }
 
 details[open] {
     background: #ffffff;
     border-color: #cbd5e1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 summary {
@@ -55,16 +90,42 @@ summary {
     cursor: pointer;
     outline: none;
     user-select: none;
+    font-size: 13px;
+}
+
+details[open] summary {
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+    color: #1d4ed8;
 }
 
 details p, details ul {
-    margin-top: 8px;
+    margin-top: 6px;
     margin-bottom: 0;
     color: #334155;
     font-size: 13px;
-    line-height: 1.4;
+    line-height: 1.45;
 }
 
 details ul {
     padding-left: 18px;
+}
+
+/* ==========================================
+   4. GALERIA DE FOTOS DENTRO DO POPUP
+   ========================================== */
+details img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+    margin-top: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Remoção de borda do marcador SVG para alinhamento limpo */
+.custom-pin {
+    background: none;
+    border: none;
 }
