@@ -4,8 +4,7 @@ const map = L.map('map', {
     zoom: 4
 });
 
-// 2. Carrega as imagens do mapa (Estilo Escuro / Dark Mode)
-// Volta para a camada padrão clara do OpenStreetMap (sem bloqueios)
+// 2. Carrega as imagens do mapa de fundo padrão (OpenStreetMap)
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '© OpenStreetMap contributors'
@@ -19,8 +18,34 @@ setTimeout(() => {
     });
 }, 2000);
 
-// 4. Alfinete Exato: Comunidade de Mumbuca — Jequitinhonha (MG)
-const marcadorMG = L.marker([-16.4355, -41.0033]).addTo(map);
+// --- CRIAÇÃO DOS ÍCONES COLORIDOS EM SVG ---
+
+// Marcador Laranja (Rio de Janeiro)
+const iconeLaranja = L.divIcon({
+    className: 'custom-pin',
+    html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f97316" width="36px" height="36px" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));">
+            <path d="M12 0C7.58 0 4 3.58 4 8c0 5.25 8 13 8 13s8-7.75 8-13c0-4.42-3.58-8-8-8zm0 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
+           </svg>`,
+    iconSize: [36, 36],
+    iconAnchor: [18, 36],
+    popupAnchor: [0, -32]
+});
+
+// Marcador Verde/Destaque (Minas Gerais)
+const iconeVerde = L.divIcon({
+    className: 'custom-pin',
+    html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#16a34a" width="36px" height="36px" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));">
+            <path d="M12 0C7.58 0 4 3.58 4 8c0 5.25 8 13 8 13s8-7.75 8-13c0-4.42-3.58-8-8-8zm0 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
+           </svg>`,
+    iconSize: [36, 36],
+    iconAnchor: [18, 36],
+    popupAnchor: [0, -32]
+});
+
+// --- ADICIONANDO OS MARCADORES COM OS ÍCONES PERSONALIZADOS ---
+
+// 4. Alfinete: Comunidade de Mumbuca (MG) - Verde
+const marcadorMG = L.marker([-16.4355, -41.0033], { icon: iconeVerde }).addTo(map);
 const conteudoMG = `
     <h3 class="popup-titulo">📍 Comunidade de Mumbuca</h3>
     <p><b>Município:</b> Jequitinhonha (MG)</p>
@@ -39,8 +64,8 @@ const conteudoMG = `
 `;
 marcadorMG.bindPopup(conteudoMG);
 
-// 5. Alfinete Exato: Quilombo do Campinho da Independência — Paraty (RJ)
-const marcadorRJ = L.marker([-23.2961, -44.7008]).addTo(map);
+// 5. Alfinete: Campinho da Independência (RJ) - Laranja
+const marcadorRJ = L.marker([-23.2961, -44.7008], { icon: iconeLaranja }).addTo(map);
 const conteudoRJ = `
     <h3 class="popup-titulo">📍 Campinho da Independência</h3>
     <p><b>Município:</b> Paraty (RJ)</p>
