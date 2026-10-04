@@ -1,0 +1,48 @@
+/* Garante que o mapa ocupe a tela inteira */
+html, body, #map {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #e5e7eb;
+}
+
+/* Estilização interna do balão do mapa (Popup) */
+.leaflet-popup-content-wrapper {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Menu retrátil (Toggle) nativo e estilizado */
+details {
+    background: #f3f4f6;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+    cursor: pointer;
+    border: 1px solid #e5e7eb;
+}
+
+details[open] summary {
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+    color: #b91c1c;
+}
+
+summary {
+    font-weight: bold;
+    outline: none;
+    color: #2563eb;
+}
+
+.popup-titulo {
+    margin: 0 0 6px 0;
+    color: #111827;
+    font-size: 15px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 4px;
+}
