@@ -5,10 +5,10 @@ const map = L.map('map', {
 });
 
 // 2. Carrega as imagens do mapa (Estilo Escuro / Dark Mode)
-// Opção de estilo escuro alternativa e estável
-L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
-    maxZoom: 20,
-    attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>'
+// Volta para a camada padrão clara do OpenStreetMap (sem bloqueios)
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
 // 3. Animação de aproximação automática (Executa após 2 segundos)
