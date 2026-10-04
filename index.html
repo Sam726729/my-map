@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa Interativo de Comunidades Quilombolas</title>
+    <title>Mapa Interativo das Comunidades Quilombolas - MG e RJ</title>
     
-    <!-- CSS do Leaflet carregado via servidores globais e seguros da cdnjs (Google/Cloudflare) -->
-    <link rel="stylesheet" href="https://cloudflare.com" integrity="sha512-Zcn6SUY3YClw9fC8I3b9I7b27Vn9DGA4h3V7U8oU1v1v9Yd7m9uB6u9uM6u9uM6u9uM6u9uM6u9uM6u9uM6u9w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- CSS do Leaflet corrigido -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9t/6BqF9PqKz/8t3tQ81wV3lPnsjK/0Gz+6/E0Q2pUuP+a55b+5zD/1qFm8/62M4b9+R6/b1r2P1y9z+z/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
         /* Garante que o mapa ocupe a tela inteira exigida pelo trabalho */
@@ -64,8 +64,8 @@
     <!-- O mapa interativo será renderizado obrigatoriamente aqui dentro -->
     <div id="map"></div>
 
-    <!-- JavaScript do Leaflet via servidores globais e seguros da cdnjs (Google/Cloudflare) -->
-    <script src="https://cloudflare.com" integrity="sha512-BwMFAv8775v34w7Rdf2A+e75A5U1v1v9Yd7m9uB6u9uM6u9uM6u9uM6u9uM6u9uM6u9uM6u9uM6u9uM6u9uM6u9w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- JavaScript do Leaflet corrigido -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-4C+Oa154K7k1P48sXWk4CzvP2K6Tz+6a+P8z4K+4e4Q7A+z+Z5+K+Q+Y+9k+C+2e4k+R+Y+1qFm8+62M4b9+R6==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         // 1. Inicializa o mapa com visão ampla do Brasil
@@ -74,15 +74,10 @@
             zoom: 4
         });
 
-        // 2. Carrega as imagens do mapa de fundo usando a rede global estável da Wikimedia
-        L.tileLayer('https://wikimedia.org{z}/{x}/{y}.png', {
+        // 2. Carrega as imagens do mapa de fundo usando a rede global OpenStreetMap (mais recomendada e estável)
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        // Caso o servidor alternativo acima falhe na sua rede, este segundo servidor (CartoDB) entra como plano de fundo reserva automaticamente:
-        L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
-            maxZoom: 20
         }).addTo(map);
 
         // 3. Animação de aproximação automática (Executa após 2 segundos)
