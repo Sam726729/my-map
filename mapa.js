@@ -82,8 +82,19 @@ const conteudoMG = `
 
         <details>
             <summary>🖼️ Galeria de Fotos</summary>
-            <img src="mandioca.jpg" alt="Cultivo de Mandioca" onclick="ampliarImagem(this.src)">
-            <p style="font-size:11px; color:#666; text-align:center;">Clique na imagem para ampliar</p>
+            <div class="galeria-container">
+                <button class="btn-galeria prev" onclick="mudarFoto('galeria-mg', -1)">&#10094;</button>
+                
+                <div class="galeria-slides" id="galeria-mg">
+                    <img src="mandioca.jpg" alt="Cultivo de Mandioca" onclick="ampliarImagem(this.src)">
+                    <!-- Para adicionar mais fotos, basta colocar mais tags <img> aqui -->
+                </div>
+                
+                <button class="btn-galeria next" onclick="mudarFoto('galeria-mg', 1)">&#10095;</button>
+            </div>
+            <p style="font-size:11px; color:#666; text-align:center; margin-top:6px;">
+                Deslize para o lado ou use as setas. Clique para ampliar.
+            </p>
         </details>
     </div>
 `;
@@ -118,36 +129,14 @@ const conteudoRJ = `
 
         <details>
             <summary>🖼️ Galeria de Fotos</summary>
-            <img src="campinho.jpg" alt="Quilombo do Campinho" onclick="ampliarImagem(this.src)">
-            <p style="font-size:11px; color:#666; text-align:center;">Clique na imagem para ampliar</p>
-        </details>
-    </div>
-`;
-
-
-// ==========================================
-// 4. CRIAÇÃO E VÍNCULO DOS MARCADORES
-// ==========================================
-
-// Marcador MG (Coordenada exata da Comunidade de Mumbuca)
-const marcadorMG = L.marker([-16.283333, -40.966667], { icon: iconeAzul }).addTo(map);
-marcadorMG.bindPopup(conteudoMG, { maxWidth: 320 });
-
-// Marcador RJ (Coordenada do Quilombo do Campinho)
-const marcadorRJ = L.marker([-23.2961, -44.7008], { icon: iconeLaranja }).addTo(map);
-marcadorRJ.bindPopup(conteudoRJ, { maxWidth: 320 });
-
-
-// ==========================================
-// 5. LÓGICA DO MODAL DE AMPLIAR IMAGEM
-// ==========================================
-function ampliarImagem(src) {
-    const modal = document.getElementById('imagemModal');
-    const imgModal = document.getElementById('imagemExpandida');
-    imgModal.src = src;
-    modal.style.display = 'flex';
-}
-
-function fecharModal() {
-    document.getElementById('imagemModal').style.display = 'none';
-}
+            <div class="galeria-container">
+                <button class="btn-galeria prev" onclick="mudarFoto('galeria-rj', -1)">&#10094;</button>
+                
+                <div class="galeria-slides" id="galeria-rj">
+                    <img src="campinho.jpg" alt="Quilombo do Campinho" onclick="ampliarImagem(this.src)">
+                    <!-- Para adicionar mais fotos, basta colocar mais tags <img> aqui -->
+                </div>
+                
+                <button class="btn-galeria next" onclick="mudarFoto('galeria-rj', 1)">&#10095;</button>
+            </div>
+            <p style="font-size:11px; color:#666; text-align:center; margin-top:6px;">
