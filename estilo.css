@@ -67,7 +67,7 @@ html, body {
 }
 
 /* ==========================================
-   3. MENUS RETRÁTEIS (DETAILS E SUMMARY)
+   3. MENUS RETRÁTEIS E GALERIA DE FOTOS
    ========================================== */
 details {
     background: #f8fafc;
@@ -112,21 +112,72 @@ details ul {
     padding-left: 18px;
 }
 
-/* Estilo das miniaturas de fotos */
-details img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 6px;
+/* Container principal da galeria */
+.galeria-container {
+    position: relative;
+    display: flex;
+    align-items: center;
     margin-top: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Área deslizante das fotos (Swipe) */
+.galeria-slides {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Oculta no Firefox */
+}
+
+.galeria-slides::-webkit-scrollbar {
+    display: none; /* Oculta no Chrome/Safari */
+}
+
+/* Estilo de cada imagem na galeria */
+.galeria-slides img {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
     cursor: zoom-in;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: transform 0.2s ease;
 }
 
-details img:hover {
+.galeria-slides img:hover {
     transform: scale(1.02);
 }
+
+/* Botões de navegação (Anterior / Próximo) */
+.btn-galeria {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.btn-galeria:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.btn-galeria.prev { left: 6px; }
+.btn-galeria.next { right: 6px; }
 
 .custom-pin {
     background: none;
