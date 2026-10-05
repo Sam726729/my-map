@@ -130,7 +130,7 @@ const conteudoRJ = `
 // ==========================================
 
 // Marcador MG (Coordenada exata da Comunidade de Mumbuca)
-const marcadorMG = L.marker([-16.4883, -41.2586], { icon: iconeAzul }).addTo(map);
+const marcadorMG = L.marker([-16.283333, -40.966667], { icon: iconeAzul }).addTo(map);
 marcadorMG.bindPopup(conteudoMG, { maxWidth: 320 });
 
 // Marcador RJ (Coordenada do Quilombo do Campinho)
