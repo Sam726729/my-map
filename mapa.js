@@ -140,3 +140,51 @@ const conteudoRJ = `
                 <button class="btn-galeria next" onclick="mudarFoto('galeria-rj', 1)">&#10095;</button>
             </div>
             <p style="font-size:11px; color:#666; text-align:center; margin-top:6px;">
+                Deslize para o lado ou use as setas. Clique para ampliar.
+            </p>
+        </details>
+    </div>
+`;
+
+
+// ==========================================
+// 4. CRIAÇÃO E VÍNCULO DOS MARCADORES
+// ==========================================
+
+// Marcador MG (Coordenada exata da Comunidade de Mumbuca)
+const marcadorMG = L.marker([-16.283333, -40.966667], { icon: iconeAzul }).addTo(map);
+marcadorMG.bindPopup(conteudoMG, { maxWidth: 320 });
+
+// Marcador RJ (Coordenada do Quilombo do Campinho)
+const marcadorRJ = L.marker([-23.2961, -44.7008], { icon: iconeLaranja }).addTo(map);
+marcadorRJ.bindPopup(conteudoRJ, { maxWidth: 320 });
+
+
+// ==========================================
+// 5. LÓGICA DO MODAL E NAVEGAÇÃO DA GALERIA
+// ==========================================
+
+// Função para abrir o modal com a imagem expandida
+function ampliarImagem(src) {
+    const modal = document.getElementById('imagemModal');
+    const imgModal = document.getElementById('imagemExpandida');
+    imgModal.src = src;
+    modal.style.display = 'flex';
+}
+
+// Função para fechar o modal
+function fecharModal() {
+    document.getElementById('imagemModal').style.display = 'none';
+}
+
+// Função para rolar as fotos da galeria para a esquerda ou direita
+function mudarFoto(idGaleria, direcao) {
+    const galeria = document.getElementById(idGaleria);
+    if (!galeria) return;
+    const larguraFoto = galeria.clientWidth;
+    
+    galeria.scrollBy({
+        left: direcao * larguraFoto,
+        behavior: 'smooth'
+    });
+}
