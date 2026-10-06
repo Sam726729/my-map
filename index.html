@@ -16,16 +16,27 @@
     <!-- Container onde o mapa é renderizado -->
     <div id="map"></div>
 
-    <!-- Modal/Janela para ampliar as imagens ao clicar -->
-    <div id="imagemModal" class="modal-imagem" onclick="fecharModal()">
-        <span class="fechar-modal">&times;</span>
-        <img id="imagemExpandida" class="conteudo-modal" alt="Imagem ampliada">
+    <!-- Modal/Janela para ampliar as imagens com navegação completa -->
+    <div id="imagemModal" class="modal-imagem" onclick="fecharModal(event)">
+        <span class="fechar-modal" onclick="fecharModal(event)">&times;</span>
+        
+        <!-- Botão Foto Anterior -->
+        <button class="modal-btn prev" onclick="mudarFotoModal(-1, event)" title="Foto anterior">&#10094;</button>
+        
+        <!-- Imagem Ampliada + Legenda -->
+        <div class="modal-conteudo-wrapper">
+            <img id="imagemExpandida" class="conteudo-modal" alt="Imagem ampliada" onclick="event.stopPropagation()">
+            <div id="modalLegenda" class="modal-legenda"></div>
+        </div>
+
+        <!-- Botão Próxima Foto -->
+        <button class="modal-btn next" onclick="mudarFotoModal(1, event)" title="Próxima foto">&#10095;</button>
     </div>
 
     <!-- JS do Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
-    <!-- Arquivo JS Local (com todo o conteúdo dos marcadores) -->
+    <!-- Arquivo JS Local -->
     <script src="mapa.js"></script>
 
 </body>
