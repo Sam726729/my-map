@@ -86,8 +86,8 @@ const conteudoMG = `
                 <button class="btn-galeria prev" onclick="mudarFoto('galeria-mg', -1)">&#10094;</button>
                 
                 <div class="galeria-slides" id="galeria-mg">
-                    <img src="mandioca.jpg" alt="Cultivo de Mandioca" onclick="ampliarImagem(this.src)">
-                    <!-- Para adicionar mais fotos, basta colocar mais tags <img> aqui -->
+                    <img src="mandioca.jpg" alt="Cultivo de Mandioca" onclick="ampliarImagem(this, 'galeria-mg')">
+                    <!-- Para adicionar mais fotos, adicione tags <img> com onclick="ampliarImagem(this, 'galeria-mg')" -->
                 </div>
                 
                 <button class="btn-galeria next" onclick="mudarFoto('galeria-mg', 1)">&#10095;</button>
@@ -133,8 +133,8 @@ const conteudoRJ = `
                 <button class="btn-galeria prev" onclick="mudarFoto('galeria-rj', -1)">&#10094;</button>
                 
                 <div class="galeria-slides" id="galeria-rj">
-                    <img src="campinho.jpg" alt="Quilombo do Campinho" onclick="ampliarImagem(this.src)">
-                    <!-- Para adicionar mais fotos, basta colocar mais tags <img> aqui -->
+                    <img src="campinho.jpg" alt="Quilombo do Campinho" onclick="ampliarImagem(this, 'galeria-rj')">
+                    <!-- Para adicionar mais fotos, adicione tags <img> com onclick="ampliarImagem(this, 'galeria-rj')" -->
                 </div>
                 
                 <button class="btn-galeria next" onclick="mudarFoto('galeria-rj', 1)">&#10095;</button>
@@ -161,23 +161,10 @@ marcadorRJ.bindPopup(conteudoRJ, { maxWidth: 320 });
 
 
 // ==========================================
-// 5. LÓGICA DO MODAL E NAVEGAÇÃO DA GALERIA
+// 5. LÓGICA DA GALERIA DO POPUP E DO MODAL AMPLIADO
 // ==========================================
 
-// Função para abrir o modal com a imagem expandida
-function ampliarImagem(src) {
-    const modal = document.getElementById('imagemModal');
-    const imgModal = document.getElementById('imagemExpandida');
-    imgModal.src = src;
-    modal.style.display = 'flex';
-}
-
-// Função para fechar o modal
-function fecharModal() {
-    document.getElementById('imagemModal').style.display = 'none';
-}
-
-// Função para rolar as fotos da galeria para a esquerda ou direita
+// Rolar as fotos do balão pequeno
 function mudarFoto(idGaleria, direcao) {
     const galeria = document.getElementById(idGaleria);
     if (!galeria) return;
@@ -188,3 +175,119 @@ function mudarFoto(idGaleria, direcao) {
         behavior: 'smooth'
     });
 }
+
+// Estado global para controlar as fotos no modal
+let listaFotosModal = [];
+let indiceFotoModal = 0;
+
+// Abrir o Modal Ampliado capturando automaticamente todas as fotos da galeria clicada
+function ampliarImagem(elementoImg, idGaleria) {
+    const galeria = document.getElementById(idGaleria);
+    
+    if (galeria) {
+        const imgs = Array.from(galeria.querySelectorAll('img'));
+        listaFotosModal = imgs.map(img => ({
+            src: img.src,
+            alt: img.alt || ''
+        }));
+        
+        indiceFotoModal = imgs.findIndex(img => img.src === elementoImg.src);
+        if (indiceFotoModal === -1) indiceFotoModal = 0;
+    } else {
+        listaFotosModal = [{ src: elementoImg.src || elementoImg, alt: elementoImg.alt || '' }];
+        indiceFotoModal = 0;
+    }
+
+    atualizarModal();
+
+    const modal = document.getElementById('imagemModal');
+    if (modal) modal.style.display = 'flex';
+}
+
+// Atualiza a foto exibida e a legenda dentro do Modal
+function atualizarModal() {
+    if (listaFotosModal.length === 0) return;
+    
+    const imgModal = document.getElementById('imagemExpandida');
+    const legendaModal = document.getElementById('modalLegenda');
+    const btnPrev = document.querySelector('.modal-btn.prev');
+    const btnNext = document.querySelector('.modal-btn.next');
+
+    const fotoAtual = listaFotosModal[indiceFotoModal];
+    imgModal.src = fotoAtual.src;
+    
+    if (legendaModal) {
+        const total = listaFotosModal.length;
+        const numAtual = indiceFotoModal + 1;
+        const textoDesc = fotoAtual.alt ? `${fotoAtual.alt}` : 'Imagem';
+        legendaModal.textContent = total > 1 ? `${textoDesc} (${numAtual}/${total})` : textoDesc;
+    }
+
+    // Mostra/oculta setas do modal se só houver 1 foto
+    const exibeBotoes = listaFotosModal.length > 1 ? 'block' : 'none';
+    if (btnPrev) btnPrev.style.display = exibeBotoes;
+    if (btnNext) btnNext.style.display = exibeBotoes;
+}
+
+// Navegar entre fotos no Modal (Próxima / Anterior)
+function mudarFotoModal(direcao, event) {
+    if (event) event.stopPropagation(); // Não fechar o modal ao clicar nas setas
+    if (listaFotosModal.length <= 1) return;
+
+    indiceFotoModal += direcao;
+    
+    // Looping infinito
+    if (indiceFotoModal < 0) {
+        indiceFotoModal = listaFotosModal.length - 1;
+    } else if (indiceFotoModal >= listaFotosModal.length) {
+        indiceFotoModal = 0;
+    }
+
+    atualizarModal();
+}
+
+// Fechar o Modal
+function fecharModal(event) {
+    if (!event || event.target.id === 'imagemModal' || event.target.classList.contains('fechar-modal')) {
+        const modal = document.getElementById('imagemModal');
+        if (modal) modal.style.display = 'none';
+    }
+}
+
+// Navegação via Teclado (Seta Esquerda, Seta Direita e ESC)
+document.addEventListener('keydown', function(event) {
+    const modal = document.getElementById('imagemModal');
+    if (modal && modal.style.display === 'flex') {
+        if (event.key === 'ArrowLeft') {
+            mudarFotoModal(-1);
+        } else if (event.key === 'ArrowRight') {
+            mudarFotoModal(1);
+        } else if (event.key === 'Escape') {
+            modal.style.display = 'none';
+        }
+    }
+});
+
+// Navegação via Gestos no Celular (Swipe / Deslizar)
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', function(e) {
+    const modal = document.getElementById('imagemModal');
+    if (modal && modal.style.display === 'flex') {
+        touchStartX = e.changedTouches[0].screenX;
+    }
+}, false);
+
+document.addEventListener('touchend', function(e) {
+    const modal = document.getElementById('imagemModal');
+    if (modal && modal.style.display === 'flex') {
+        touchEndX = e.changedTouches[0].screenX;
+        const minDist = 40; // Distância mínima do deslize em pixels
+        if (touchEndX < touchStartX - minDist) {
+            mudarFotoModal(1);  // Deslizou para a esquerda -> Próxima foto
+        } else if (touchEndX > touchStartX + minDist) {
+            mudarFotoModal(-1); // Deslizou para a direita -> Foto anterior
+        }
+    }
+}, false);
