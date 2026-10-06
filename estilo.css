@@ -1,13 +1,16 @@
 /* ==========================================
-   1. CONFIGURAÇÕES GERAIS DA TELA E MAPA
+   1. RESET E ESTRUTURA GERAL
    ========================================== */
-html, body {
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
     width: 100%;
     height: 100%;
     font-family: Arial, sans-serif;
-    background-color: #e5e7eb;
 }
 
 #map {
@@ -16,103 +19,61 @@ html, body {
 }
 
 /* ==========================================
-   2. ESTILIZAÇÃO DO BALÃO DO LEAFLET (POPUP)
+   2. ESTILOS DOS POPUPS DO LEAFLET
    ========================================== */
-.leaflet-popup-content-wrapper {
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    border-radius: 10px;
-    padding: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
 .popup-conteudo {
-    max-height: 380px;
-    overflow-y: auto;
-    padding-right: 4px;
-}
-
-/* Barra de rolagem discreta */
-.popup-conteudo::-webkit-scrollbar {
-    width: 6px;
-}
-
-.popup-conteudo::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #333;
 }
 
 .popup-titulo {
-    margin: 0 0 4px 0;
-    color: #0f172a;
     font-size: 16px;
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 4px;
+    color: #1e293b;
+    margin-bottom: 4px;
 }
 
 .popup-subtitulo {
-    margin: 0 0 6px 0;
-    color: #475569;
     font-size: 13px;
+    color: #475569;
+    margin-bottom: 6px;
 }
 
 .popup-destaque {
-    margin: 0 0 10px 0;
-    font-size: 13px;
-    color: #1e40af;
-    background-color: #eff6ff;
-    padding: 6px 8px;
-    border-radius: 6px;
+    font-size: 12px;
+    background-color: #f1f5f9;
+    padding: 6px;
     border-left: 3px solid #2563eb;
+    margin-bottom: 10px;
+    border-radius: 2px;
 }
 
-/* ==========================================
-   3. MENUS RETRÁTEIS E GALERIA DE FOTOS
-   ========================================== */
 details {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    padding: 8px 10px;
-    margin-bottom: 8px;
-    transition: all 0.2s ease-in-out;
-}
-
-details[open] {
-    background: #ffffff;
-    border-color: #cbd5e1;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-bottom: 6px;
+    padding: 6px 8px;
 }
 
 summary {
     font-weight: bold;
-    color: #0f172a;
     cursor: pointer;
-    outline: none;
-    user-select: none;
-    font-size: 13px;
-}
-
-details[open] summary {
-    border-bottom: 1px solid #f1f5f9;
-    padding-bottom: 4px;
-    margin-bottom: 6px;
-    color: #1d4ed8;
+    color: #1e293b;
 }
 
 details p, details ul {
     margin-top: 6px;
-    margin-bottom: 0;
-    color: #334155;
-    font-size: 13px;
-    line-height: 1.45;
+    font-size: 12px;
 }
 
 details ul {
     padding-left: 18px;
 }
 
-/* Container principal da galeria */
+/* ==========================================
+   3. GALERIA NO BALÃO DO MAPA
+   ========================================== */
 .galeria-container {
     position: relative;
     display: flex;
@@ -120,39 +81,37 @@ details ul {
     margin-top: 8px;
 }
 
-/* Área deslizante das fotos (Swipe) */
 .galeria-slides {
     display: flex;
-    gap: 10px;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Oculta no Firefox */
+    scroll-snap-type: x mandatory;
+    gap: 8px;
+    width: 100%;
+    border-radius: 6px;
+    scrollbar-width: none;
 }
 
 .galeria-slides::-webkit-scrollbar {
-    display: none; /* Oculta no Chrome/Safari */
+    display: none;
 }
 
-/* Estilo de cada imagem na galeria */
 .galeria-slides img {
     flex: 0 0 100%;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     width: 100%;
-    height: 180px;
+    height: 160px;
     object-fit: cover;
     border-radius: 6px;
-    cursor: zoom-in;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
 }
 
 .galeria-slides img:hover {
-    transform: scale(1.02);
+    opacity: 0.92;
+    transform: scale(0.99);
 }
 
-/* Botões de navegação (Anterior / Próximo) */
 .btn-galeria {
     position: absolute;
     top: 50%;
@@ -160,67 +119,108 @@ details ul {
     background: rgba(0, 0, 0, 0.6);
     color: white;
     border: none;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+    font-size: 16px;
+    padding: 6px 10px;
     cursor: pointer;
-    font-size: 14px;
+    border-radius: 50%;
     z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s ease;
+    transition: background 0.2s;
 }
 
 .btn-galeria:hover {
     background: rgba(0, 0, 0, 0.9);
 }
 
-.btn-galeria.prev { left: 6px; }
-.btn-galeria.next { right: 6px; }
-
-.custom-pin {
-    background: none;
-    border: none;
-}
+.btn-galeria.prev { left: 4px; }
+.btn-galeria.next { right: 4px; }
 
 /* ==========================================
-   4. MODAL PARA AMPLIAR A IMAGEM (LIGHTBOX)
+   4. MODAL AMPLIADO COM NAVEGAÇÃO E TOUCH
    ========================================== */
 .modal-imagem {
     display: none;
     position: fixed;
-    z-index: 9999;
-    top: 0;
+    z-index: 99999;
     left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.9);
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(4px);
-}
-
-.conteudo-modal {
-    max-width: 80vw;
-    max-height: 80vh;
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    object-fit: contain;
-    animation: zoomIn 0.2s ease-out;
+    user-select: none;
 }
 
 .fechar-modal {
     position: absolute;
-    top: 20px;
-    right: 30px;
+    top: 15px;
+    right: 25px;
     color: #ffffff;
-    font-size: 36px;
+    font-size: 38px;
     font-weight: bold;
     cursor: pointer;
+    z-index: 100001;
+    transition: color 0.2s;
 }
 
-@keyframes zoomIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+.fechar-modal:hover {
+    color: #f97316;
+}
+
+.modal-conteudo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 85vw;
+    max-height: 85vh;
+}
+
+.conteudo-modal {
+    max-width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+}
+
+.modal-legenda {
+    color: #ffffff;
+    margin-top: 12px;
+    font-size: 14px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 6px 16px;
+    border-radius: 20px;
+}
+
+.modal-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: none;
+    font-size: 28px;
+    padding: 12px 18px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 100000;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.modal-btn:hover {
+    background: rgba(249, 115, 22, 0.85);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.modal-btn.prev { left: 20px; }
+.modal-btn.next { right: 20px; }
+
+@media (max-width: 600px) {
+    .modal-btn {
+        font-size: 20px;
+        padding: 8px 12px;
+    }
+    .modal-btn.prev { left: 8px; }
+    .modal-btn.next { right: 8px; }
 }
